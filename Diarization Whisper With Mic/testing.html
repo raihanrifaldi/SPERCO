@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weird Problem</title>
+    <script>
+        function microphone() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
+                    var recorder = new MediaRecorder(stream);
+                    var chunks = [];
+                    recorder.ondataavailable = function (e) {
+                        chunks.push(e.data);
+                    }
+                    recorder.onstop = function () {
+                        stream.getTracks()[0].stop();
+                        var blob = new Blob(chunks, { type: "audio/mp3; codecs=opus" });
+                        var url = window.URL.createObjectURL(blob);
+                        document.getElementById("player").src = url;
+                        document.getElementById("upload").href = url;
+                        document.getElementById("upload").download = "test.mp3";
+                    }
+                    recorder.start();
+                    setTimeout(function () {
+                        recorder.stop();
+                    }, 5000);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="Record Microphone" onclick="microphone();">
+    <br>
+    <audio controls id="player"></audio>
+    <br>
+    <a id="upload">Download Microphone Recording</a>
+</body>
+
+</html>
