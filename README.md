@@ -1,0 +1,1 @@
+Aplikasi yang dikembangkan untuk notulensi keperluan laporan rapat perusahaan. SPERCO  dapat merekam seluruh perbincangan isi rapat melalui input suara menjadi sebuah text. Notulis dapat mengedit hasil dari rekaman, menambah atau menghapus beberapa kata.
